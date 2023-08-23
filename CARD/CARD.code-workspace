@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../STRUCT"
+		},
+		{
+			"path": "../TEXTS"
+		},
+		{
+			"path": "../STRING"
+		},
+		{
+			"path": "../TIME"
+		},
+		{
+			"path": "../CONTROL"
+		}
+	],
+	"settings": {}
+}
