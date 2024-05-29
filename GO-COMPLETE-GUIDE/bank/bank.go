@@ -1,40 +1,21 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"os"
-	"strconv"
 	"time"
+
+	"github.com/Zekeriyyah/mastering-go/GO-COMPLETE-GUIDE/bank/fileops"
 )
+
+const recordFileName = "balance_sheet.txt"
 
 type Account struct {
 	Balance float64
 }
 
-func writeBalanceToFile(balance float64) error {
-	balanceText := fmt.Sprint(balance)
-	err := os.WriteFile("balance_sheet.txt", []byte(balanceText), 0644)
-	// err := errors.New("dummy error")
-	return err
-}
-
-func getBalanceFromFile(filename string) (float64, error) {
-	balanceByte, err := os.ReadFile(filename)
-	if err != nil {
-		return 0, errors.New("user record not found")
-	}
-
-	balance, err := strconv.ParseFloat(string(balanceByte), 64)
-	if err != nil {
-		return 0, errors.New("failed to parse balance")
-	}
-
-	return balance, nil
-}
-
 func main() {
-	initialBalance, _ := getBalanceFromFile("balance_sheet.txt")
+	initialBalance, _ := fileops.GetFloatFromFile(recordFileName)
 	// if err != nil {
 	// 	fmt.Println("ERROR\t", err)
 	// 	return
@@ -75,7 +56,7 @@ func (a *Account) executeTask(choice int) {
 		}
 		a.Balance += deposit
 
-		err := writeBalanceToFile(a.Balance)
+		err := fileops.WriteFloatToFile(recordFileName, a.Balance)
 		if err != nil {
 			fmt.Println("ERROR\t", "transaction failed")
 			return
@@ -103,7 +84,7 @@ func (a *Account) executeTask(choice int) {
 		fmt.Println("TRANSACTION IN PROGRESS....")
 		time.Sleep(3 * time.Second)
 
-		err := writeBalanceToFile(a.Balance)
+		err := fileops.WriteFloatToFile(recordFileName, a.Balance)
 		if err != nil {
 			fmt.Println("ERROR\t", "transaction failed")
 			return
